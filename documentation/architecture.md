@@ -10,13 +10,13 @@ Raw Banking Data
         ↓
 Bronze Layer
         ↓
+Dataflow Gen2
+        ↓
 PySpark Transformation
         ↓
 Silver Layer
         ↓
-PySpark Aggregation
-        ↓
-Gold Summary Tables
+Analytical Data
         ↓
 Direct Lake Semantic Model
         ↓
@@ -26,102 +26,105 @@ Power BI Dashboard
 
 ## 1. Raw Data
 
-The project starts with raw banking data stored as CSV files.
+The project starts with raw banking transaction data stored as CSV files.
 
-Examples:
+The main dataset contains banking transaction information such as:
 
-- Accounts
-- Customers
-- Transactions
-- Payments
-- Branches
-- Loans
-- Fraud Transactions
-- Date data
+- Transaction ID
+- Account ID
+- Customer ID
+- Transaction Date
+- Transaction Type
+- Amount
+- Payment Method
+- Transaction Status
+- Location
 
 ---
 
 ## 2. Bronze Layer
 
-The raw data is stored in the Bronze layer.
+The raw banking data is stored in the Bronze layer of the Fabric Lakehouse.
 
 Purpose:
 
-- Store the original/raw data
-- Maintain the source data
-- Provide a starting point for transformation
+- Store raw/source data
+- Preserve the original data
+- Provide a starting point for data processing
 
 ---
 
-## 3. Bronze to Silver Transformation
+## 3. Dataflow Gen2
 
-PySpark is used to transform the Bronze data.
+Dataflow Gen2 is used for initial data preparation.
 
-Main activities:
+Dataflow name:
 
-- Read raw data
-- Clean the data
-- Handle data types
-- Remove unwanted records
-- Standardize columns
-- Create clean transaction data
+`DF_Banking_Bronze_to_Silver`
 
-The cleaned data is stored in the Silver layer.
+Main activities include:
 
----
-
-## 4. Silver Layer
-
-The Silver layer contains cleaned and structured data.
-
-Example:
-
-- `silver.transactions`
-
-This layer is used as the reliable data source for further analytics.
+- Importing CSV data
+- Filtering rows
+- Promoting headers
+- Applying appropriate data types
+- Loading the prepared data into the Banking Lakehouse
 
 ---
 
-## 5. Silver to Gold Transformation
+## 4. Bronze to Silver Transformation
 
-PySpark is used to aggregate the Silver data into analytical summary tables.
+PySpark is used for further data processing.
 
-Gold tables include:
+Notebook:
 
-- `transaction_summary`
-- `payment_summary`
-- `location_summary`
-- `status_summary`
-- `account_summary`
-- `customer_summary`
-- `branch_summary`
-- `date_summary`
+`01_Bronze_to_Silver_Transformation`
 
-These tables are designed for faster and easier reporting.
+Main activities include:
+
+- Reading the banking transaction data
+- Inspecting the dataset
+- Checking the schema
+- Cleaning and transforming data
+- Preparing structured Silver-layer data
 
 ---
 
-## 6. Semantic Model
+## 5. Silver Layer
 
-A Direct Lake semantic model is created using the Gold tables.
+The Silver layer contains cleaned and structured banking data.
 
-The semantic model acts as a bridge between the prepared data and Power BI reporting.
+The cleaned transaction data is prepared for downstream analytics and reporting.
+
+---
+
+## 6. Analytical Layer
+
+The processed data is used to support banking analytics and reporting.
+
+The analytical data is used by the semantic model to provide business-friendly information for Power BI.
+
+---
+
+## 7. Semantic Model
+
+A semantic model is created in Microsoft Fabric for reporting and analysis.
 
 Model name:
 
 `Banking_Analytics_Model`
 
+The semantic model provides the data model used by the Power BI report.
+
 ---
 
-## 7. Power BI Dashboard
+## 8. Power BI Dashboard
 
 The semantic model is connected to a Power BI report.
 
 Dashboard title:
 
 **Banking Financial Analytics Dashboard**
-
-The dashboard contains:
 
 ### KPI Cards
 
@@ -143,42 +146,42 @@ The dashboard contains:
 
 ---
 
-## 8. Technologies Used
+## 9. Technologies Used
 
 - Microsoft Fabric
 - OneLake
 - Lakehouse
+- Dataflow Gen2
 - PySpark
 - Delta Lake
-- Dataflow Gen2
 - Direct Lake
 - Semantic Model
 - Power BI
 
 ---
 
-## 9. End-to-End Data Flow
+## 10. End-to-End Data Flow
 
-The complete data processing flow is:
+The complete processing flow is:
 
-Raw CSV Data  
-↓  
-Bronze Layer  
-↓  
-Data Cleaning using PySpark  
-↓  
-Silver Layer  
-↓  
-Data Aggregation using PySpark  
-↓  
-Gold Summary Tables  
-↓  
-Direct Lake Semantic Model  
-↓  
+Raw CSV Data
+↓
+Bronze Layer
+↓
+Dataflow Gen2
+↓
+PySpark Data Cleaning & Transformation
+↓
+Silver Layer
+↓
+Analytical Data
+↓
+Direct Lake Semantic Model
+↓
 Power BI Dashboard
 
 ---
 
-## 10. Project Objective
+## 11. Project Objective
 
-The main objective of this project is to build an end-to-end banking analytics platform that transforms raw banking data into clean, analytical datasets and interactive business dashboards using Microsoft Fabric.
+The main objective of this project is to build an end-to-end banking analytics solution that transforms raw banking transaction data into clean and structured data and presents meaningful business insights through a Power BI dashboard using Microsoft Fabric.
